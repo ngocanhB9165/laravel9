@@ -3,11 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\CategoriesRepository;
 use Illuminate\Http\Request;
 use App\Models\Category;
 
 class CategoryController extends Controller
 {
+
+    protected $repository;
+
+
+    public function __construct(CategoriesRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +25,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = $this->repository->all();
         return view('admin.categories.index',compact('categories'));
     }
 
@@ -37,7 +47,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
+        $this->repository->create($request->all());
         return redirect()->route('categories.index');
     }
 
@@ -60,7 +70,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $categories = Category::find($id);
+        $categories = $this->repository->find($id);
         return view('admin.categories.edit',compact('categories'));
     }
 
@@ -73,7 +83,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Category::find($id)->update($request->all());
+        $this->repository->find($id)->update($request->all());
         return redirect()->route('categories.index');
     }
 
@@ -85,7 +95,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::find($id)->delete();
+        $this->repository->find($id)->delete();
         return redirect()->route('categories.index');
     }
 }

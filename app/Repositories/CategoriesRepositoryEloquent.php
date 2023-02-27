@@ -2,10 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Entities\Categories;
-use Prettus\Repository\Eloquent\BaseRepository;
+use App\Models\Category;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Validators\UserValidator;
 
 /**
  * Class UserRepositoryEloquent.
@@ -21,7 +19,7 @@ class CategoriesRepositoryEloquent extends BaseRepositoryEloquent implements Cat
      */
     public function model()
     {
-        return Categories::class;
+        return Category::class;
     }
 
     /**
