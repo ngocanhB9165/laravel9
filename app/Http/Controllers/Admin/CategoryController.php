@@ -5,13 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\CategoriesRepository;
 use Illuminate\Http\Request;
-use App\Models\Category;
+use \Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
 
     protected $repository;
-
 
     public function __construct(CategoriesRepository $repository)
     {
@@ -26,7 +25,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->repository->all();
-        return view('admin.categories.index',compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -36,25 +35,28 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = $this->repository->rootCategory()->get();
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->repository->create($request->all());
+        $data= $request->all();
+        $data['slug'] = Str::slug($request->name);
+        $this->repository->create($data);
         return redirect()->route('categories.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -65,20 +67,21 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $categories = $this->repository->find($id);
-        return view('admin.categories.edit',compact('categories'));
+        $categories = $this->repository->rootCategory()->get();
+        $category = $this->repository->find($id);
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,7 +93,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

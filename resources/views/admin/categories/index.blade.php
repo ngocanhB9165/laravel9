@@ -13,7 +13,7 @@
                 <div class="card-body">
 
                     <a href="{{route('categories.create')}}" class="btn btn-primary mb-2">
-                        Tambah
+                        Create
                     </a>
 
                     <table class="table table-hover table-bordered table-stripped" id="example2">
@@ -21,6 +21,8 @@
                         <tr>
                             <th>STT</th>
                             <th>Tên danh mục</th>
+                            <th>Slug</th>
+                            <th>Parent Category</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -28,6 +30,8 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$category->name}}</td>
+                                <td>{{$category->slug}}</td>
+                                <td>{{$category->parent->name ?? ''}}</td>
                                 <td>
                                     <a href="{{route('categories.edit', $category)}}" class="btn btn-primary btn-xs">
                                         Edit

@@ -29,6 +29,7 @@ class CategoriesRepositoryEloquent extends BaseRepositoryEloquent implements Cat
      */
     public function validator()
     {
+
     }
 
 

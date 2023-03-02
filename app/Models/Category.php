@@ -13,4 +13,34 @@ class Category extends Model
         'slug',
         'parent_id',
     ];
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function scopeRootCategory()
+    {
+        return $this->where('parent_id', 0);
+    }
+
+    public function allLevelChildrenWithSubChild()
+    {
+        return $this->hasMany(Category::class, 'parent_id')->select('*')->with('allLevelChildrenWithSubChild');
+    }
+
+//    /**
+//     * Get the route key for the model.
+//     *
+//     * @return string
+//     */
+//    public function getRouteKeyName()
+//    {
+//        return 'slug';
+//    }
 }
