@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{route('categories.update', $category->id)}}" method="POST">
+    <form action="{{ route('categories.update', $category->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="row">
@@ -16,28 +16,35 @@
                     <div class="card-body">
 
                         <div class="form-group">
-                          <label for="">Lựa chọn danh mục</label>
+                            <label for="">Lựa chọn danh mục</label>
                             <select name="parent_id" id="" class="form-control">
-                                <option value="0">Root</option>
                                 @foreach ($categories as $subcategory)
-                                    @include('admin.categories.categories', ['parent_id'=>$category->parent_id,'category' => $subcategory, 'level' =>''])
+                                    @include('admin.categories.categories', [
+                                        'parent_id' => $category->parent_id,
+                                        'category' => $subcategory,
+                                        'level' => '',
+                                    ])
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="exampleInputEmail">Tên danh mục</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputEmail"  name="name" value="{{$category->name ?? old('name')}}">
+                            <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                id="exampleInputEmail" name="name" value="{{ $category->name ?? old('name') }}">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
-                        <a href="{{route('categories.index')}}" class="btn btn-default">
+                        <a href="{{ route('categories.index') }}" class="btn btn-default">
                             Danh sách
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-@stop
+    @stop

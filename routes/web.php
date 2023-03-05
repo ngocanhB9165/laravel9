@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,6 @@ Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
 Route::resource('categories', CategoryController::class)
+    ->middleware('auth');
+Route::resource('products', ProductController::class)
     ->middleware('auth');

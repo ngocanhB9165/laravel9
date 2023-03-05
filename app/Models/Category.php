@@ -32,15 +32,5 @@ class Category extends Model
     public function allLevelChildrenWithSubChild()
     {
         return $this->hasMany(Category::class, 'parent_id')->select('*')->with('allLevelChildrenWithSubChild');
-    }
-
-//    /**
-//     * Get the route key for the model.
-//     *
-//     * @return string
-//     */
-//    public function getRouteKeyName()
-//    {
-//        return 'slug';
-//    }
+    }   
 }

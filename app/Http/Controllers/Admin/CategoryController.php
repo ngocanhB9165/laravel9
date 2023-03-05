@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\CategoriesRepository;
 use Illuminate\Http\Request;
 use \Illuminate\Support\Str;
+use App\Http\Requests\CategoryAddRequest;
+use App\Http\Requests\CategoryEditRequest;
 
 class CategoryController extends Controller
 {
@@ -45,7 +47,7 @@ class CategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryAddRequest $request)
     {
         $data= $request->all();
         $data['slug'] = Str::slug($request->name);
@@ -84,7 +86,7 @@ class CategoryController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryEditRequest $request, $id)
     {
         $this->repository->find($id)->update($request->all());
         return redirect()->route('categories.index');

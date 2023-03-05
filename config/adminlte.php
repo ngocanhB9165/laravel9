@@ -234,6 +234,11 @@ return [
             'url'  => '/categories',
             'icon'  => 'fa fa-users',
         ],
+        [
+            'text' => 'Product',
+            'url'  => '/products',
+            'icon'  => 'fa fa-users',
+        ],
     ],
 
     /*

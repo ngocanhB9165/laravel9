@@ -16,8 +16,7 @@
                         <div class="form-group">
                             <label for="">Lựa chọn danh mục</label>
                             <select name="parent_id" id="" class="form-control">
-                                <option value="0">Root</option>
-                            @foreach ($categories as $subcategory)
+                                @foreach ($categories as $subcategory)
                                     @include('admin.categories.categories', ['parent_id'=>0,'category' => $subcategory, 'level' =>''])
                                 @endforeach
                             </select>
@@ -28,6 +27,9 @@
                             <label for="exampleInputEmail">Tên danh mục</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
                                    id="exampleInputEmail" name="name" value="{{old('name')}}">
+                            @error('name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
 

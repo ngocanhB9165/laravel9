@@ -20,8 +20,8 @@
                         <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên danh mục</th>
-                            <th>Slug</th>
+                            <th>Category</th>
+                            {{-- <th>Slug</th> --}}
                             <th>Parent Category</th>
                         </tr>
                         </thead>
@@ -30,7 +30,7 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$category->name}}</td>
-                                <td>{{$category->slug}}</td>
+                                {{-- <td>{{$category->slug}}</td> --}}
                                 <td>{{$category->parent->name ?? ''}}</td>
                                 <td>
                                     <a href="{{route('categories.edit', $category)}}" class="btn btn-primary btn-xs">
@@ -63,7 +63,7 @@
 
         function notificationBeforeDelete(event, el) {
             event.preventDefault();
-            if (confirm('Apakah anda yakin akan menghapus data ? ')) {
+            if (confirm('Do you want to delete this category ?')) {
                 $("#delete-form").attr('action', $(el).attr('href'));
                 $("#delete-form").submit();
             }
