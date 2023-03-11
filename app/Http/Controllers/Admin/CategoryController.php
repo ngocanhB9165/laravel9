@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\CategoriesRepository;
-use Illuminate\Http\Request;
 use \Illuminate\Support\Str;
 use App\Http\Requests\CategoryAddRequest;
 use App\Http\Requests\CategoryEditRequest;

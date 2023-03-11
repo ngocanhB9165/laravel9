@@ -3,15 +3,14 @@
 namespace App\Repositories;
 
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\ProductsRepository;
-use App\Models\Product;
+use App\Models\ProductsVariants;
 
 /**
  * Class ProductRepositoryEloquent.
  *
  * @package namespace App\Repositories;
  */
-class ProductsRepositoryEloquent extends BaseRepositoryEloquent implements ProductsRepository
+class ProductsVariantRepositoryEloquent extends BaseRepositoryEloquent implements ProductsVariantRepository
 {
     /**
      * Specify Model class name
@@ -20,7 +19,7 @@ class ProductsRepositoryEloquent extends BaseRepositoryEloquent implements Produ
      */
     public function model()
     {
-        return Product::class;
+        return ProductsVariants::class;
     }
 
 

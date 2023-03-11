@@ -20,38 +20,32 @@
                         <thead>
                             <tr>
                                 <th>STT</th>
-                                <th>Categories_Id</th>
+                                <th>Product_Id</th>
                                 <th>Name</th>
                                 <th>Code</th>
-                                <th>Description</th>
-                                {{-- <th>Product Variant</th> --}}
                                 <th>Price</th>
                                 <th>Quantity</th>
-                                <th>Collection</th>
-                                <th>Made In</th>
-                                <th>Material</th>
+                                <th>Color</th>
+                                <th>Size</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $key => $product)
+                            @foreach ($productsVariants as $key => $products)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $product->categories_id }}</td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->code }}</td>
-                                    <td>{{ $product->description}}</td>
-                                    {{-- <td>{{ $product->name_variant }}</td> --}}
-                                    <td>{{ $product->price }}</td>
-                                    <td>{{ $product->quantity }}</td>
-                                    <td>{{ $product->collection }}</td>
-                                    <td>{{ $product->made_in}}</td>
-                                    <td>{{ $product->material}}</td>
+                                    <td>{{ $products->product_id }}</td>
+                                    <td>{{ $products->name }}</td>
+                                    <td>{{ $products->code }}</td>
+                                    <td>{{ $products->price }}</td>
+                                    <td>{{ $products->quantity }}</td>
+                                    <td>{{ $products->color }}</td>
+                                    <td>{{ $products->size}}</td>
                                     <td>
-                                        <a href="{{ route('products.edit', $product) }}" class="btn btn-primary btn-xs">
+                                        <a href="{{ route('products_variants.edit', $products) }}" class="btn btn-primary btn-xs">
                                             Edit
                                         </a>
-                                        <a href="{{ route('products.destroy', $product) }}"
+                                        <a href="{{ route('products_variants.destroy', $products) }}"
                                             onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                             Delete
                                         </a>
@@ -79,7 +73,7 @@
 
         function notificationBeforeDelete(event, el) {
             event.preventDefault();
-            if (confirm('Do you want to delete this product ?')) {
+            if (confirm('Do you want to delete this product variant ?')) {
                 $("#delete-form").attr('action', $(el).attr('href'));
                 $("#delete-form").submit();
             }

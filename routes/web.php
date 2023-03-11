@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductVariantController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,12 @@ Route::resource('users', \App\Http\Controllers\UserController::class)
 Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
-Route::resource('categories', CategoryController::class)
-    ->middleware('auth');
-Route::resource('products', ProductController::class)
-    ->middleware('auth');
+
+Route::resource('/categories', CategoryController::class)->middleware('auth');
+Route::resource('/products', ProductController::class)->middleware('auth');
+Route::resource('/products_variants', ProductVariantController::class)->middleware('auth');
+
+// Route::resources([
+//     "categories" => CategoryController::class,
+//     "products" => ProductController::class
+// ]);

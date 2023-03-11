@@ -1,17 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Repositories\ProductsRepository;
+use App\Repositories\CategoriesRepository;
+use App\Repositories\ProductsVariantRepository;
 use Illuminate\Http\Request;
-use \App\Repositories\ProductsRepository;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     protected $repository;
-
-    public function __construct(ProductsRepository $repository)
-    {
+    protected $categoryRepository;
+    protected $productVariantRepository;
+    public function __construct(
+        ProductsRepository $repository,
+        CategoriesRepository $categoryRepository,
+        ProductsVariantRepository $productVariantRepository
+    ) {
         $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
+        $this->productVariantRepository = $productVariantRepository;
     }
     /**
      * Display a listing of the resource.
@@ -31,7 +41,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = $this->categoryRepository->rootCategory()->get();
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -42,9 +53,54 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        DB::beginTransaction();
+        try {
+            $dataProduct = $this->prepraDataProduct($data);
+            $productId =  $this->repository->create($dataProduct);
+            $dataProductVariants = $this->prepraDataProductVariants($data['product_variants'], $productId);
+            $this->productVariantRepository->insert($dataProductVariants);
+            DB::commit();
+            return redirect()->route('products.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
+
     }
 
+    public function prepraDataProduct($data)
+    {
+        return [
+            'categories_id' => $data['categories_id'],
+            'name' => $data['name'],
+            'code' => $data['code'],
+            'description' => $data['description'],
+            'price' => $data['price'],
+            'quantity' => $data['quantity'],
+            'collection' => $data['collection'],
+            'made_in' => $data['made_in'],
+            'material' => $data['material'],
+        ];
+    }
+
+    public function prepraDataProductVariants($data, $productId)
+    {
+        $dataProductVariants = [];
+        for ($i = 0; $i < count(reset($data)); $i++) {
+            $productVariant = [
+                'product_id' => $productId->id,
+                'name' =>  $data['name'][$i],
+                'code' =>  $data['code'][$i],
+                'price' =>  $data['price'][$i],
+                'quantity' =>  $data['quantity'][$i],
+                'color' =>  $data['color'][$i],
+                'size' =>  $data['size'][$i],
+            ];
+            array_push($dataProductVariants, $productVariant);
+        }
+        return $dataProductVariants;
+    }
     /**
      * Display the specified resource.
      *
@@ -64,7 +120,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = $this->categoryRepository->rootCategory()->get();
+        $product = $this->repository->find($id);
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -76,7 +134,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->repository->find($id)->update($request->all());
+        return redirect()->route('products.index');
     }
 
     /**
@@ -87,6 +146,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repository->find($id)->delete();
+        return redirect()->route('products.index');
     }
 }

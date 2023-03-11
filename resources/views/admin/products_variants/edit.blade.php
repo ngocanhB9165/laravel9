@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-    <form action="{{route('products.update',$product->id)}}" method="POST">
+    <form action="{{route('products_variants.update',$products->id)}}" method="POST">
         @csrf
         @method('PUT')
         <div class="row">
@@ -17,19 +17,19 @@
 
                         <div class="form-group">
                             <label for="exampleInputEmail">Danh mục sản phẩm</label>
-                            <select class="form-control" name="categories_id" id="">
-                                @foreach ($categories as $subcategory)
-                                    @include('admin.categories.categories', ['parent_id'=>0,'category' => $subcategory, 'level' =>''])
-                                @endforeach
+                            <select class="form-control" name="product_id" id="">
+                               @foreach ( as )
+
+                               @endforeach
                             </select>
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail">Tên sản phẩm</label>
+                            <label for="exampleInputEmail">Tên biến thể</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                   id="exampleInputEmail" name="name" value="{{ $product->name ?? old('name') }}">
+                                   id="exampleInputEmail" name="name" value="{{ $products->name ?? old('name') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -37,15 +37,7 @@
                         <div class="form-group">
                             <label for="exampleInputEmail">Mã sản phẩm</label>
                             <input type="text" class="form-control @error('code') is-invalid @enderror"
-                                   id="exampleInputEmail" name="code" value="{{ $product->code ?? old('code') }}">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail">Mô tả sản phẩm</label>
-                            <input type="text" class="form-control @error('description') is-invalid @enderror"
-                                   id="exampleInputEmail" name="description" value="{{ $product->description ?? old('description') }}">
+                                   id="exampleInputEmail" name="code" value="{{ $products->code ?? old('code') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -53,7 +45,7 @@
                         <div class="form-group">
                             <label for="exampleInputEmail">Giá sản phẩm</label>
                             <input type="text" class="form-control @error('price') is-invalid @enderror"
-                                   id="exampleInputEmail" name="price" value="{{ $product->price ?? old('price') }}">
+                                   id="exampleInputEmail" name="price" value="{{ $products->price ?? old('price') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -61,31 +53,23 @@
                         <div class="form-group">
                             <label for="exampleInputEmail">Số lượng sản phẩm</label>
                             <input type="text" class="form-control @error('quantity') is-invalid @enderror"
-                                   id="exampleInputEmail" name="quantity" value="{{ $product->quantity ?? old('quantity') }}">
+                                   id="exampleInputEmail" name="quantity" value="{{ $products->quantity ?? old('quantity') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail">Bộ sưu tập</label>
-                            <input type="text" class="form-control @error('collection') is-invalid @enderror"
-                                   id="exampleInputEmail" name="collection" value="{{ $product->collection ?? old('collection') }}">
+                            <label for="exampleInputEmail">Màu sắc</label>
+                            <input type="text" class="form-control @error('color') is-invalid @enderror"
+                                   id="exampleInputEmail" name="color" value="{{ $products->color ?? old('color') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail">Xuất xứ</label>
-                            <input type="text" class="form-control @error('made_in') is-invalid @enderror"
-                                   id="exampleInputEmail" name="made_in" value="{{ $product->made_in ?? old('made_in') }}">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail">Chất liệu</label>
-                            <input type="text" class="form-control @error('material') is-invalid @enderror"
-                                   id="exampleInputEmail" name="material" value="{{ $product->material ?? old('material') }}">
+                            <label for="exampleInputEmail">Kích cỡ</label>
+                            <input type="text" class="form-control @error('size') is-invalid @enderror"
+                                   id="exampleInputEmail" name="size" value="{{ $products->size ?? old('size') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -94,7 +78,7 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
-                        <a href="{{route('products.index')}}" class="btn btn-default">
+                        <a href="{{route('products_variants.index')}}" class="btn btn-default">
                             Danh sách sản phẩm
                         </a>
                     </div>

@@ -239,6 +239,11 @@ return [
             'url'  => '/products',
             'icon'  => 'fa fa-users',
         ],
+        [
+            'text' => 'Products Variants',
+            'url'  => '/products_variants',
+            'icon'  => 'fa fa-users',
+        ],
     ],
 
     /*
