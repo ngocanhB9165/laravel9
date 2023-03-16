@@ -51,6 +51,26 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputEmail">Biến thể</label>
+                            <br>
+                            <button type="button" id="add_variant">Thêm biến thể</button>
+                            <table id="table_variant" class="table table-responsive d-none">
+                                <thead>
+                                    <tr>
+                                        <th>Tên biến thể</th>
+                                        <th>Code</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Màu</th>
+                                        <th>Size</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="record_variant">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail">Giá sản phẩm</label>
                             <input type="text" class="form-control @error('price') is-invalid @enderror"
                                    id="exampleInputEmail" name="price" value="{{ $product->price ?? old('price') }}">
@@ -101,4 +121,42 @@
                 </div>
             </div>
         </div>
+
+        @push('js')
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    var max_fields = 15; //maximum input boxes allowed
+                    var wrapper = $("#record_variant"); //Fields wrapper
+                    var add_button = $("#add_variant"); //Add button ID
+                    var x = 1; //initlal text box count
+                    $("#add_variant").click(function() {
+                        $("#table_variant").removeClass('d-none');
+                        if (x < max_fields) { //max input box allowed
+                            x++; //text box increment
+                            $(wrapper).append(
+                                ` <tr>
+                                        <td> <input type = 'text'
+                                        name = 'product_variants[name][]' > </td>
+                                        <td> <input type = 'text'
+                                        name = 'product_variants[code][]' > </td>
+                                        <td> <input type = 'text'
+                                        name = 'product_variants[price][]' > </td>
+                                        <td> <input type = 'text'
+                                        name = 'product_variants[quantity][]' > </td>
+                                        <td> <input type = 'text'
+                                        name = 'product_variants[color][]' > </td>
+                                        <td> <input type = 'text'
+                                        name = 'product_variants[size][]' > </td>
+                                        <td> <button type="button" class="remove_field btn btn-info">Remove</button>
+                            </tr>`); //add input box
+                        }
+                    });
+                    $(wrapper).click(".remove_field", function() { //user click on remove text
+                        $(this).remove();
+                        x--;
+                        if (x == 1) $("#table_variant").addClass('d-none');
+                    })
+                });
+            </script>
+        @endpush
 @stop
