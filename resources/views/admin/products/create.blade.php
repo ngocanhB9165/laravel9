@@ -131,13 +131,13 @@
                     var max_fields = 15; //maximum input boxes allowed
                     var wrapper = $("#record_variant"); //Fields wrapper
                     var add_button = $("#add_variant"); //Add button ID
-                    var x = 1; //initlal text box count
+                    var x = 0; //initlal text box count
                     $("#add_variant").click(function() {
                         $("#table_variant").removeClass('d-none');
                         if (x < max_fields) { //max input box allowed
                             x++; //text box increment
                             $(wrapper).append(
-                                ` <tr>
+                                ` <tr id='record-${x}'>
                                         <td> <input type = 'text'
                                         name = 'product_variants[name][]' > </td>
                                         <td> <input type = 'text'
@@ -150,15 +150,16 @@
                                         name = 'product_variants[color][]' > </td>
                                         <td> <input type = 'text'
                                         name = 'product_variants[size][]' > </td>
-                                        <td> <button type="button" class="remove_field btn btn-info">Remove</button>
+                                        <td> <button id='${x}' type="button" class='remove_field btn btn-info'>Remove</button>
                             </tr>`); //add input box
                         }
                     });
-                    $(wrapper).click(".remove_field", function() { //user click on remove text
-                        $(this).remove();
+                    $(document).on('click', `.remove_field`, function(){
+                        var button_id = $(this).attr("id");
+                        $('#record-'+button_id+'').remove();
                         x--;
-                        if (x == 1) $("#table_variant").addClass('d-none');
-                    })
+                        if (x == 0) $("#table_variant").addClass('d-none');
+                    });
                 });
             </script>
         @endpush
