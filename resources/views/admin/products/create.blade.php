@@ -57,7 +57,6 @@
                                       id="text" cols="30" rows="10" placeholder="Mô tả"
                                       name="description">{{old('description')}}</textarea>
                             @error('description') <span class="text-danger">{{$message}}</span> @enderror
-                            @include('ckfinder::setup')
                         </div>
                         <div class="col-md-12 mb-2" id="none-image">
                             <img id="preview-image-before-upload"
@@ -154,6 +153,7 @@
         </div>
 
         @push('js')
+            @include('ckfinder::setup')
             <script src={{ url('ckeditor/ckeditor.js') }}></script>
             <script type="text/javascript">
                 CKEDITOR.replace('text', {

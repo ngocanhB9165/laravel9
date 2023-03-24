@@ -28,8 +28,8 @@ $config['authentication'] = '\App\Http\Middleware\CustomCKFinderAuth';
 /*============================ License Key ============================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_licenseKey
 
-$config['licenseName'] = 'localhost';
-$config['licenseKey']  = 'E222FRGVWHP6SXFF196N4CJ2UR2PM';
+$config['licenseName'] = 'laravel9.test';
+$config['licenseKey']  = 'KMNMDHKPBJWK1CJYYM2KVQTANHUNP';
 
 /*============================ CKFinder Internal Directory ============================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_privateDir
