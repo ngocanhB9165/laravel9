@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use Illuminate\Support\Facades\Auth;
-
+use CKSource\CKFinderBridge\Controller\CKFinderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,7 +16,14 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::any('/ckfinder/connector', [CKFinderController::class, 'requestAction'])
+    ->name('ckfinder_connector');
 
+Route::any('/ckfinder/browser', [CKFinderController::class, 'browserAction'])
+    ->name('ckfinder_browser');
+
+Route::any('/ckfinder/examples/{example?}', [CKFinderController::class, 'examplesAction'])
+    ->name('ckfinder_examples');
 Route::get('/', function () {
     return view('welcome');
 });
